@@ -7,6 +7,7 @@
     <title>Hufflepuff Healers | Login</title>
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
     <link type="text/css" rel="stylesheet" href="style.css">
+    <meta name="theme-color" content="#271a3c">
     <script src="https://www.gstatic.com/firebasejs/9.13.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.13.0/firebase-auth-compat.js"></script>
     <script src="dist/firebaseui.js"></script>
@@ -22,12 +23,27 @@
         };
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
-        const ui = new firebaseui.auth.AuthUI(firebase.auth(app));
+        const auth = firebase.auth(app);
+        const ui = new firebaseui.auth.AuthUI(auth);
 
         ui.start('#firebaseui-auth-container', {
             signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
             signInFlow: "popup",
-            signInSuccessUrl: '/dashboard'
+            signInSuccessUrl: '/'
+        });
+
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                console.log(`Signed in as ${user.displayName} (${user.email})`);
+                user.getIdToken().then(function (token) {
+                    document.cookie = "token=" + token;
+                    sessionStorage.setItem('name', user.displayName)
+                });
+                window.location.href = "/"
+            }
+        }, function (error) {
+            console.log(error);
+            alert('Unable to log in: ' + error);
         });
     </script>
     <meta name='viewport' content='width=device-width, initial-scale=1'>

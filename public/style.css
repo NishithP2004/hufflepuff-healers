@@ -1,19 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+@font-face {
+    font-family: 'Harry P';
+    src: url(fonts/HARRYP__.TTF);
+}
+
+@font-face {
+    font-family: 'TiemposText';
+    src: url(fonts/TiemposHeadline-Regular.otf);
+}
 * {
     padding: 0;
     margin: 0;
+    --colors-gold: #e4c86e;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
 html,
 body {
     width: 100%;
     height: 100%;
-}
-
-@font-face {
-    font-family: 'Harry P';
-    src: url(fonts/HARRYP__.TTF);
 }
 
 body {
@@ -22,7 +27,7 @@ body {
     justify-content: center;
     align-items: center;
     background: linear-gradient(to right, #60287f, #271a3c);
-    color: gold;
+    color: var(--colors-gold);
 }
 
 #login {
@@ -38,40 +43,43 @@ body {
 .title {
     font-family: 'Harry P', sans-serif;
     text-align: center;
-    font-size: 3.5em;
+    font-size: 2.5em;
     font-weight: 100;
     margin: 10px;
 }
 
 #login > p {
     color: #fff;
-    font-family: "TiemposText",serif !important;
+    font-family: "TiemposText", serif !important;
     font-size: medium;
 }
 
 .glass {
-    background: rgba(45, 36, 198, 0.48);
+    background: rgba(45, 36, 198, 0.15);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(1.9px);
-    -webkit-backdrop-filter: blur(1.9px);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
     border: 1px solid rgba(45, 36, 198, 0.85);
 }
 
 main {
-    margin: auto;
+    margin: 10px auto;
     padding: 10px;
-    overflow-y: hidden;
+    overflow-y: auto;
+    max-width: 800px;
+    text-align: center;
 }
 
 header {
-    padding: 20px;
+    padding: 10px;
     font-size: 1.25em;
 }
 
 #chat {
     padding: 10px;
     display: flex;
+    flex-flow: row wrap;
     gap: 10px;
     justify-content: center;
     align-items: center;
@@ -79,48 +87,48 @@ header {
 
 #chat input[type="text"] {
     flex: 1;
-    padding: 8px;
+    padding: 10px;
     border: none;
     border-radius: 8px;
+    order: 1;
 }
 
-.submit-button {
-    background-color: #271a3c;
-    color: gold;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 16px;
-    cursor: pointer;
-}
-
-#chat input[type="submit"] {
+#chat button[type="submit"] {
     border-radius: 10px;
-    color: #fff;
-    background-color: gold;
+    color: #271a3c;
+    background-color: var(--colors-gold);
     border: 0;
     padding: 10px;
-    font-family: "Open Sans",sans-serif;
-    font-family: 'Open Sans', sans-serif;
+    font-family: "Open Sans", sans-serif;
+    width: max-content;
+    order: 2;
+}
+
+#chat button[type="submit"]:hover {
+    background-color: #fff;
+    transition: 0.5s all linear;
 }
 
 #chat-container {
     width: 100%;
     height: 100%;
-    min-height: 63vh;
+    min-height: 60vh;
     margin: 10px auto;
     overflow: hidden;
+    overflow-y: auto
 }
 
 .container {
     margin: 10px auto;
     padding: 1px;
 }
+
 #chat-log {
     list-style-type: none;
     width: 100%;
     padding: 2px;
-    height: 100%; /* Occupy the entire available height */
-    max-height: 60vh; /* Set a maximum height, adjust as needed */
+    height: 100%; 
+    max-height: 60vh; 
     overflow-y: auto;
 }
 
@@ -134,11 +142,57 @@ header {
     border-radius: 10px;
     color: #fff;
     z-index: 99;
-    margin: 3px;
-    background-color: rgba(255, 255, 255, 0.2) !important;
+    margin: 5px;
+    background-color: rgba(0, 255, 47, 0.15) !important;
+    text-align: left;
 }
 
 .bubble p.from {
-    color: #fff;
+    color: var(--colors-gold);
     text-transform: uppercase;
+    font-family: 'TiemposText', Times, serif;
+    margin-bottom: 2px;
+    font-weight: bold;
+    font-size: smaller;
+}
+
+.bubble p.msg {
+    font-family: 'TiemposText', Times, serif;
+}
+
+#chat > input[type='file'] {
+    order: 3;
+    text-align: center;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+#signOut {
+    width: 100px;
+    border-radius: 10px;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #60287f;
+    border: 0;
+    text-transform: uppercase;
+    color: #fff;
+    font-family: 'TiemposText', Times, serif;
+}
+
+#signOut:hover {
+    background-color: #fff;
+    color: #000;
+    transition: 0.5s all linear;
+}
+
+main::-webkit-scrollbar {
+    display: none;
+}
+
+::-webkit-file-upload-button {
+    background-color: var(--colors-gold);
+    border: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgba(45, 36, 198, 0.85);
+    font-weight: bold;
 }
