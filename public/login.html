@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Hufflepuff Healers | Login</title>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.1.0/firebase-ui-auth.css" />
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.13.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.13.0/firebase-auth-compat.js"></script>
+    <script src="dist/firebaseui.js"></script>
+
+    <script type="text/javascript">
+        const firebaseConfig = {
+            apiKey: "AIzaSyB7SCFTAFIPLD94A8HcQjMZj2kuDn23Xhg",
+            authDomain: "hufflepuff-healers.firebaseapp.com",
+            projectId: "hufflepuff-healers",
+            storageBucket: "hufflepuff-healers.appspot.com",
+            messagingSenderId: "732804195190",
+            appId: "1:732804195190:web:9e5e998a35f8a11a969057"
+        };
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const ui = new firebaseui.auth.AuthUI(firebase.auth(app));
+
+        ui.start('#firebaseui-auth-container', {
+            signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+            signInFlow: "popup",
+            signInSuccessUrl: '/dashboard'
+        });
+    </script>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+
+<body>
+    <main>
+        <div id="login" class="glass">
+            <h2 class="title">Hufflepuff Healers</h2>
+            <p>
+                Casting a Spell on Skin Conditions: Diagnose with a dash of magic! 🪄<br><br>
+                Welcome to Derma-Expecto Patronum, your AI-powered guide to understanding skin issues.<br><br>
+
+                Log in to access this powerful tool capable of providing preliminary diagnoses for a wide array of
+                dermatological problems.<br><br>
+
+                It's like having a Potions Master in your pocket, ready to help you tackle any skin challenge!<br>
+            </p>
+            <div id="firebaseui-auth-container"></div>
+        </div>
+    </main>
+</body>
+
+</html>

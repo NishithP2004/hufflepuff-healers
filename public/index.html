@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Dashboard</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"
+        integrity="sha384-/KNQL8Nu5gCHLqwqfQjA689Hhoqgi2S84SNUxC3roTe4EhJ9AfLkp8QiQcU8AMzI" crossorigin="anonymous">
+    </script>
+</head>
+
+<body>
+    <main class="glass" style="width: 90%; height: 100%;">
+        <header class="glass">
+            <h2 class="title">Hufflepuff Healers</h2>
+        </header>
+        <div class="container glass">
+            <div id="chat-container" class="glass">
+                <ul id="chat-log">
+                </ul>
+            </div>
+            <form id="chat" class="glass" name="chat">
+                <input type="text" required name="message" placeholder="Type in your message... ">
+                <input type="file" accept="image/*" name="image" id="image" onchange="handleFileSelect()">
+                <input type="submit" value="Send">
+            </form>
+            <script>
+                var image = null;
+                const socket = io();
+                // client-side
+                socket.on("connect", () => {
+                    console.log("Connected to " + socket.id); // x8WIv7-mJelg7on_ALbx
+                    // document.getElementById("status").innerText = "Connected to " + socket.id;
+                });
+
+                socket.on('message', data => {
+                    if (data.id != socket.id) {
+                        console.log(data.msg)
+                        handleMessage("receiver", data.msg);
+                    }
+                })
+
+                function handleFileSelect() {
+                    const fileInput = document.getElementById('image');
+
+                    if (fileInput.files.length > 0) {
+                        const selectedFile = fileInput.files[0];
+
+                        console.log('File Name:', selectedFile.name);
+                        console.log('File Type:', selectedFile.type);
+                        console.log('File Size:', selectedFile.size, 'bytes');
+
+                        const reader = new FileReader();
+
+                        reader.onload = function (e) {
+                            const fileContent = e.target.result;
+                            console.log('File Content:', fileContent);
+                            image = fileContent;
+                        };
+                        
+                        reader.readAsArrayBuffer(selectedFile)
+                    } else {
+                        console.log('No file selected');
+                    }
+                }
+
+                let form = document.forms[0];
+                form.addEventListener("submit", (ev) => {
+                    ev.preventDefault();
+                    let msg = form["message"].value;
+                    let data = {
+                        msg,
+                        from: 'user',
+                        image
+                    }
+                    handleMessage("sender", data);
+                    form['message'].value = "";
+                    console.log(msg)
+                    socket.emit('message', {
+                        data,
+                        id: socket.id
+                    })
+                    image = null;
+                    form.reset()
+                    return false;
+                })
+
+                function handleMessage(source, data) {
+                    let chat = document.querySelector("#chat-container > ul");
+                    let li = document.createElement('li');
+                    li.innerHTML =
+                        `
+    <div class='bubble glass'>
+        <p class='from'>${data.from}</p>
+        <p class='body'>${data.msg}</p> 
+    </div>
+    `
+                    chat.appendChild(li)
+                    chat.scrollTo(0, document.body.scrollHeight);
+                }
+            </script>
+        </div>
+    </main>
+</body>
+
+</html>

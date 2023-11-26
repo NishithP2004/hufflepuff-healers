@@ -1,0 +1,144 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+@font-face {
+    font-family: 'Harry P';
+    src: url(fonts/HARRYP__.TTF);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, #60287f, #271a3c);
+    color: gold;
+}
+
+#login {
+    padding: 10px;
+    width: 80vw;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.title {
+    font-family: 'Harry P', sans-serif;
+    text-align: center;
+    font-size: 3.5em;
+    font-weight: 100;
+    margin: 10px;
+}
+
+#login > p {
+    color: #fff;
+    font-family: "TiemposText",serif !important;
+    font-size: medium;
+}
+
+.glass {
+    background: rgba(45, 36, 198, 0.48);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(1.9px);
+    -webkit-backdrop-filter: blur(1.9px);
+    border: 1px solid rgba(45, 36, 198, 0.85);
+}
+
+main {
+    margin: auto;
+    padding: 10px;
+    overflow-y: hidden;
+}
+
+header {
+    padding: 20px;
+    font-size: 1.25em;
+}
+
+#chat {
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+#chat input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+}
+
+.submit-button {
+    background-color: #271a3c;
+    color: gold;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+#chat input[type="submit"] {
+    border-radius: 10px;
+    color: #fff;
+    background-color: gold;
+    border: 0;
+    padding: 10px;
+    font-family: "Open Sans",sans-serif;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#chat-container {
+    width: 100%;
+    height: 100%;
+    min-height: 63vh;
+    margin: 10px auto;
+    overflow: hidden;
+}
+
+.container {
+    margin: 10px auto;
+    padding: 1px;
+}
+#chat-log {
+    list-style-type: none;
+    width: 100%;
+    padding: 2px;
+    height: 100%; /* Occupy the entire available height */
+    max-height: 60vh; /* Set a maximum height, adjust as needed */
+    overflow-y: auto;
+}
+
+.bubble {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    width: fit-content;
+    min-width: 50px;
+    max-width: 80%;
+    border-radius: 10px;
+    color: #fff;
+    z-index: 99;
+    margin: 3px;
+    background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.bubble p.from {
+    color: #fff;
+    text-transform: uppercase;
+}
