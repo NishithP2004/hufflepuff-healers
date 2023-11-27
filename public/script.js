@@ -6,16 +6,8 @@ socket.on("connect", () => {
     document.getElementById("status").innerText = "Connected to " + socket.id;
 });
 
-socket.on('message', async data => {
-    if (data.id != socket.id) {
-        console.log(data.msg)
-    }
-})
-
-socket.on('reply', data => {
-    if (data.id != socket.id) {
-        handleMessage(data)
-    }
+socket.on('message', data => {
+    handleMessage(data)
 })
 
 function handleFileSelect() {

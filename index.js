@@ -4,6 +4,8 @@ const { GooglePaLM } = require('langchain/llms/googlepalm')
 const admin = require('firebase-admin');
 const app = express();
 const cookieParser = require('cookie-parser');
+const fs = require('node:fs');
+const { instrument } = require('@socket.io/admin-ui')
 
 var serviceAccount = require("./hufflepuff-healers-firebase-adminsdk-tc69a-6cdc3c6d05.json");
 admin.initializeApp({
@@ -16,8 +18,21 @@ app.use(cookieParser())
 
 const PORT = process.env.PORT || 3000;
 
-const server = require("http").createServer(app);
-const io = require("socket.io")(server);
+const server = require('https').createServer({
+    key: fs.readFileSync(process.env.KEY),
+    cert: fs.readFileSync(process.env.CERT)
+}, app);
+const io = require("socket.io")(server, {
+    cors: {
+        origin: ['https://admin.socket.io'],
+        credentials: true
+    }
+});
+
+instrument(io, {
+    mode: 'development',
+    auth: false
+})
 
 server.listen(PORT, () => {
     console.log(`Listening on port: ${PORT}`);
@@ -69,7 +84,7 @@ io.on("connection", (client) => {
     client.on('message', async (data) => {
         console.log(data)
         let aiResponse = await invokeAI(data.msg);
-        io.to(data.id).emit('reply', {
+        io.to(data.id).emit('message', {
             msg: aiResponse,
             from: 'AI'
         })
